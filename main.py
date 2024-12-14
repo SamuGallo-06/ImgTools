@@ -53,6 +53,8 @@ class ImgTools(QMainWindow):
         
         #Labels
         self.imgViewerLabel = self.findChild(QLabel, "imgViewerLabel")
+        #label pixmap with program logo
+        self.imgViewerLabel.setPixmap(QPixmap("resources/logo.png"))
         self.imgPathLabel = self.findChild(QLabel, "imgPathLabel")
         
         #Combo boxes
@@ -250,6 +252,10 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     # File di traduzione
     translator = QTranslator()
+    if(not os.path.exists("configuration.ini")):
+        file = open("configuration.ini", "w")
+        file.write("[ImgTools]\nlanguage = English\nuse-custom-output-path = False\ncustom-output-path =")
+        file.close()
     config = configparser.ConfigParser()
     config.read("configuration.ini")
     if(config.get("ImgTools", "language") == "Italiano"):
