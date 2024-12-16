@@ -105,16 +105,17 @@ class ImgTools(QMainWindow):
         self.imagesList.clear()
         self.imagesComboBox.clear()
         self.loadedImageFileName = QFileDialog.getOpenFileName(self, "Select an image to convert", self.HOME, "All Files(*);;PNG Files(*.png);;JPEG Files(*.jpg)", "All Files(*)")[0]
-        self.pixmap = QPixmap(self.loadedImageFileName)
-        self.imgViewerLabel.setPixmap(self.pixmap)
-        self.imgPathLabel.setText(self.loadedImageFileName)
-        self.loadedImage = Image.open(self.loadedImageFileName, mode="r")
-        self.originalSize = self.loadedImage.size
-        self.sizeXSpinBox.setValue(self.originalSize[0])
-        self.sizeYSpinBox.setValue(self.originalSize[1])
-        self.currentRotation = 0
-        self.UpdateOutputPath()
-        self.statusbar.showMessage("Image loaded: " + self.loadedImageFileName)
+        if(self.loadedImageFileName != ""):
+            self.pixmap = QPixmap(self.loadedImageFileName)
+            self.imgViewerLabel.setPixmap(self.pixmap)
+            self.imgPathLabel.setText(self.loadedImageFileName)
+            self.loadedImage = Image.open(self.loadedImageFileName, mode="r")
+            self.originalSize = self.loadedImage.size
+            self.sizeXSpinBox.setValue(self.originalSize[0])
+            self.sizeYSpinBox.setValue(self.originalSize[1])
+            self.currentRotation = 0
+            self.UpdateOutputPath()
+            self.statusbar.showMessage("Image loaded: " + self.loadedImageFileName)
         
     def ChangeImage(self):
         self.loadedImageFileName = self.imagesComboBox.currentText()
