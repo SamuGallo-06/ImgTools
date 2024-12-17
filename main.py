@@ -3,7 +3,7 @@ QMainWindow, QPushButton, QLabel, QFileDialog, QComboBox,
 QApplication, QLineEdit, QStatusBar, QCheckBox, QSpinBox,
 QMessageBox, QDoubleSpinBox, QAction)
 from PyQt5.QtCore import QTranslator
-from PyQt5.QtGui import QPixmap, QTransform
+from PyQt5.QtGui import QPixmap, QTransform, QIcon
 import os, sys
 from PIL import Image
 from PyQt5.uic import loadUi
@@ -21,6 +21,7 @@ class ImgTools(QMainWindow):
         super(ImgTools, self).__init__()
         loadUi("ui/converter.ui", self)
         self.HOME = os.path.expanduser("~")
+        self.setWindowIcon(QIcon("resources/icon.png"))
         self.imagesList = []
         self.isFolderLoaded = False
         self.config = configparser.ConfigParser()
