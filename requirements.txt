@@ -1,0 +1,6 @@
+onnxruntime-gpu
+onnxruntime-gpu
+Pillow
+PyQt5
+configparser
+rembg

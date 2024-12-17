@@ -31,7 +31,7 @@ border: 2px solid #000000</string>
      <string/>
     </property>
     <property name="scaledContents">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QComboBox" name="outputFormatComboBox">
@@ -367,7 +367,14 @@ border: 2px solid #000000</string>
     </property>
     <addaction name="actionInfo"/>
    </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionBackground_Remover"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuTools"/>
    <addaction name="menuAbout"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -403,6 +410,14 @@ border: 2px solid #000000</string>
   <action name="actionInfo">
    <property name="text">
     <string>Info</string>
+   </property>
+  </action>
+  <action name="actionBackground_Remover">
+   <property name="text">
+    <string>Background Remover</string>
+   </property>
+   <property name="toolTip">
+    <string>Remove the background from an image</string>
    </property>
   </action>
  </widget>

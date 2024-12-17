@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import (
 QMainWindow, QPushButton, QLabel, QFileDialog, QComboBox, 
 QApplication, QLineEdit, QStatusBar, QCheckBox, QSpinBox,
 QMessageBox, QDoubleSpinBox, QAction)
-from PyQt5.QtCore import QTranslator
+from PyQt5.QtCore import QTranslator, Qt, QSize
 from PyQt5.QtGui import QPixmap, QTransform, QIcon
 import os, sys
 from PIL import Image
@@ -13,6 +13,7 @@ from converters import *
 from progressWindow import ProgressWindow
 from preferencesWindow import PreferencesWindow
 from aboutWindow import *
+from bgremoverWindow import *
 
 
 class ImgTools(QMainWindow):
@@ -54,6 +55,7 @@ class ImgTools(QMainWindow):
         
         #Labels
         self.imgViewerLabel = self.findChild(QLabel, "imgViewerLabel")
+        self.imgViewerLabel.setAlignment(Qt.AlignCenter)
         #label pixmap with program logo
         self.imgViewerLabel.setPixmap(QPixmap("resources/logo.png"))
         self.imgPathLabel = self.findChild(QLabel, "imgPathLabel")
@@ -90,6 +92,7 @@ class ImgTools(QMainWindow):
         self.actionQuit.triggered.connect(self.Quit)
         self.actionPreferences.triggered.connect(self.OpenPreferences)
         self.actionInfo.triggered.connect(self.ShowAboutWindow)
+        self.actionBackground_Remover.triggered.connect(self.ShowBackgroundRemoverWindow)
         
     def UpdateOutputPath(self):
         if(not self.useCustomOutputPath):
@@ -108,6 +111,7 @@ class ImgTools(QMainWindow):
         self.loadedImageFileName = QFileDialog.getOpenFileName(self, "Select an image to convert", self.HOME, "All Files(*);;PNG Files(*.png);;JPEG Files(*.jpg)", "All Files(*)")[0]
         if(self.loadedImageFileName != ""):
             self.pixmap = QPixmap(self.loadedImageFileName)
+            self.pixmap = self.pixmap.scaled(self.imgViewerLabel.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
             self.imgViewerLabel.setPixmap(self.pixmap)
             self.imgPathLabel.setText(self.loadedImageFileName)
             self.loadedImage = Image.open(self.loadedImageFileName, mode="r")
@@ -231,6 +235,20 @@ class ImgTools(QMainWindow):
     def OpenPreferences(self):
         self.preferencesWindow = PreferencesWindow()
         self.preferencesWindow.show()
+        
+    def ShowBackgroundRemoverWindow(self):
+        if(hasattr(self, "loadedImageFileName")):
+            print("True")
+            self.bgremoverWindow = BackgroundRemoverWindow(self.loadedImageFileName)
+            self.bgremoverWindow.show()
+            if(os.path.exists(self.loadedImageFileName)):
+                self.bgremoverWindow.UpdatePreview()
+                self.bgremoverWindow.UpdateOriginal()
+        else:
+            print("false")
+            self.bgremoverWindow = BackgroundRemoverWindow()
+            self.bgremoverWindow.show()
+        
         
     def ShowAboutWindow(self):
         self.aboutWindow = AboutWindow()
