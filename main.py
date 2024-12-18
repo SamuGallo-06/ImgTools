@@ -241,9 +241,6 @@ class ImgTools(QMainWindow):
             print("True")
             self.bgremoverWindow = BackgroundRemoverWindow(self.loadedImageFileName)
             self.bgremoverWindow.show()
-            if(os.path.exists(self.loadedImageFileName)):
-                self.bgremoverWindow.UpdatePreview()
-                self.bgremoverWindow.UpdateOriginal()
         else:
             print("false")
             self.bgremoverWindow = BackgroundRemoverWindow()

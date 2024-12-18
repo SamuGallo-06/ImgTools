@@ -49,4 +49,5 @@ class BackgroundRemoverWindow(QWidget):
         
     def SaveImage(self):
         RemoveBgFromImage(self.inputImagePath, self.outputFilePathInput.text())
+        os.remove("temp.png")
         self.close()
